@@ -21,7 +21,7 @@ builder.Services.AddHttpClient("FSS_API", client =>
 });
 var app = builder.Build();
 
-//--Kailash 11/11/2026--//
+//----//
 using (var scope = app.Services.CreateScope())
 {
     var roleManager =
