@@ -13,7 +13,7 @@ namespace FSS_MVC.Controllers
             _httpClient = factory.CreateClient();
         }
 
-        [Authorize(Roles = "Patient, Docter")]
+        [Authorize(Roles = "Patient, Doctor")]
         public async Task<IActionResult> Index()
         {
             var booking = await _httpClient.GetFromJsonAsync<List<Booking>>(
@@ -22,7 +22,7 @@ namespace FSS_MVC.Controllers
             return View(booking);
         }
 
-        [Authorize(Roles = "Patient, Docter, Admin")]
+        [Authorize(Roles = "Patient, Doctor, Admin")]
         public async Task<IActionResult> Details(int id)
         {
 
@@ -36,7 +36,7 @@ namespace FSS_MVC.Controllers
 
         }
 
-        [Authorize(Roles = "Patient, Docter")]
+        [Authorize(Roles = "Patient, Doctor")]
         public async Task<IActionResult> Create()
         {
             var appoSchedule = await _httpClient.GetFromJsonAsync<List<Booking>>("api/Booking/");
@@ -49,7 +49,7 @@ namespace FSS_MVC.Controllers
 
             return View();
         }
-        [Authorize(Roles = "Patient, Docter")]
+        [Authorize(Roles = "Patient, Doctor")]
         [HttpPost]
         public async Task<IActionResult> Create(Booking booking)
         {
@@ -61,7 +61,7 @@ namespace FSS_MVC.Controllers
             
             return View(booking);
         }
-        [Authorize(Roles = "Patient, Docter")]
+        [Authorize(Roles = "Patient, Doctor")]
         public async Task<IActionResult> Edit(int id)
         {
             var response = await _httpClient.GetAsync($"api/Booking/{id}");
@@ -88,7 +88,7 @@ namespace FSS_MVC.Controllers
             return View(booking);
 
         }
-        [Authorize(Roles = "Patient, Docter")]
+        [Authorize(Roles = "Patient, Doctor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Booking booking)
@@ -116,7 +116,7 @@ namespace FSS_MVC.Controllers
             var booking = (await response.Content.ReadFromJsonAsync<Booking>());
             return View(booking);
         }
-        [Authorize(Roles = "Patient, Docter")]
+        [Authorize(Roles = "Patient, Doctor")]
         [HttpPost]
         public async Task<IActionResult> Delete(Booking booking)
         {
