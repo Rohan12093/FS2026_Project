@@ -22,7 +22,7 @@ namespace FSS_MVC.Controllers
             return View(booking);
         }
         [Authorize(Roles = "Doctor, Admin")]
-        public async Task<IActionResult> DocDetail(int id)
+        public async Task<IActionResult> Detail(int id)
         {
             var response = await _httpClient.GetAsync($"api/DoctorDetail/{id}");
             if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -130,31 +130,6 @@ namespace FSS_MVC.Controllers
                 return RedirectToAction("Index");
             }
             return View(doctorDetail);
-        }
-
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeletePatient(int id)
-        {
-            var response = await _httpClient.GetAsync($"api/PatientDetail/{id}");
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-            if (!response.IsSuccessStatusCode)
-                return NotFound();
-
-            var booking = (await response.Content.ReadFromJsonAsync<PatientDetail>());
-            return View(booking);
-        }
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(PatientDetail patientDetail)
-        {
-            var response = await _httpClient.DeleteAsync($"api/PatientDetail/{patientDetail.PatientId}");
-            if (response.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index");
-            }
-            return View(patientDetail);
         }
 
     }

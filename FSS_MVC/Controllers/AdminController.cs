@@ -1,4 +1,5 @@
 ﻿using FSS_MVC.Data;
+using FSS_MVC.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,11 +15,13 @@ namespace AdminControlProj.Controllers
 
         private readonly UserManager<ApplicationUser> _users;         // Used to manage users.
         private readonly RoleManager<IdentityRole> _roles;         // Used to manage roles.
+        private readonly HttpClient _httpClient;
 
-        public AdminController(UserManager<ApplicationUser> users, RoleManager<IdentityRole> roles)
+        public AdminController(UserManager<ApplicationUser> users, RoleManager<IdentityRole> roles, HttpClient httpClient)
         {
             _users = users;
             _roles = roles;
+            _httpClient = httpClient;
         }
 
         //retrieves all roles from the database, converts them to a list, and passes them to the “Roles” view.
@@ -37,6 +40,31 @@ namespace AdminControlProj.Controllers
 
             // Pass the roles to the Roles view.
             return View(roles);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeletePatient(int id)
+        {
+            var response = await _httpClient.GetAsync($"api/PatientDetail/{id}");
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                return NotFound();
+            if (!response.IsSuccessStatusCode)
+                return NotFound();
+
+            var booking = (await response.Content.ReadFromJsonAsync<PatientDetail>());
+            return View(booking);
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(PatientDetail patientDetail)
+        {
+            var response = await _httpClient.DeleteAsync($"api/PatientDetail/{patientDetail.PatientId}");
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(patientDetail);
         }
     }
 }

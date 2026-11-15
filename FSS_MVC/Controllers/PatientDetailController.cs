@@ -11,7 +11,7 @@ namespace FSS_MVC.Controllers
         private readonly HttpClient _httpClient;
         public PatientDetailController(IHttpClientFactory factory)
         {
-            _httpClient = factory.CreateClient();
+            _httpClient = factory.CreateClient("FSS_API");
         }
         [Authorize(Roles = "Admin,Patient")]
         public async Task<IActionResult> Index()
@@ -33,7 +33,7 @@ namespace FSS_MVC.Controllers
             return View(await response.Content.ReadFromJsonAsync<PatientDetail>());
 
         }
-        [Authorize(Roles = "Patient")]
+        
         public async Task<IActionResult> Create()
         {
             var appoSch = await _httpClient.GetFromJsonAsync<List<PatientDetail>>("api/PatientDetail/");
@@ -47,7 +47,7 @@ namespace FSS_MVC.Controllers
 
             return View();
         }
-        [Authorize(Roles = "Patient")]
+        
         [HttpPost]
         public async Task<IActionResult> Create(PatientDetail booking)
         {
