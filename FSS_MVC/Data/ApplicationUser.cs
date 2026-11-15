@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
+namespace FSS_MVC.Data;
 
-namespace FSS_MVC.Data
+public class ApplicationUser : IdentityUser
 {
-    {
-    public class ApplicationUser : IdentityUser
-    {
-        public string? FirstName { get; set; }   // your extra property
-        public string? LastName { get; set; }
-        public DateTime? DateOfBirth { get; set; }
-    }
+    public string? FirstName { get; set; }   
+    public string? LastName { get; set; }
+    public DateTime? DateOfBirth { get; set; }
 }

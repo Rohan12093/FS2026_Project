@@ -1,6 +1,4 @@
-﻿using AdminControlProj.Data;
-using AdminControlProj.ViewModels;
-using FSS_MVC.Data;
+﻿using FSS_MVC.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
