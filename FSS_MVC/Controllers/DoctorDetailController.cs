@@ -10,14 +10,14 @@ namespace FSS_MVC.Controllers
         private readonly HttpClient _httpClient;
         public DoctorDetailController(IHttpClientFactory factory)
         {
-            _httpClient = factory.CreateClient();
+            _httpClient = factory.CreateClient("FSS_API");
         }
 
         [Authorize(Roles = "Doctor, Admin")]
         public async Task<IActionResult> Index()
         {
             var booking = await _httpClient.GetFromJsonAsync<List<DoctorDetail>>(
-                "api/DoctorDetailController");
+                "api/DoctorDetail");
 
             return View(booking);
         }

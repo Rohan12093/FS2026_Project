@@ -18,7 +18,7 @@ namespace FSS_API.Controllers
                 _context = context;
             }
 
-            [Authorize(Roles = "Admin, Doctor")]
+
             [HttpGet]
             public async Task<IActionResult> Index()
             {
@@ -28,7 +28,6 @@ namespace FSS_API.Controllers
             }
 
             //--Kailash 9/11/2026--//
-            [Authorize(Roles = "Admin,Doctor,Patient")]
             [HttpGet("{appoScheId}")]
             public async Task<ActionResult<TblAppointmentSchedules>> GetAppointmentSchedule(int appoScheId)
             {
@@ -43,7 +42,6 @@ namespace FSS_API.Controllers
             }
 
             //---PUT---/
-            [Authorize(Roles = "Admin,Doctor")]
             [HttpPut("{appoScheId}")]
             public async Task<IActionResult> PutDocSchedule(int? appoScheId, TblAppointmentSchedules docSchedule)
             {
@@ -73,7 +71,6 @@ namespace FSS_API.Controllers
             }
 
             //--POST--//
-            [Authorize(Roles = "Admin,Doctor")]
             [HttpPost]
             public async Task<ActionResult<TblAppointmentSchedules>> PostDocShedule(TblAppointmentSchedules appoScheId)
             {
@@ -84,7 +81,6 @@ namespace FSS_API.Controllers
             }
 
             //--DELETE--//
-            [Authorize(Roles = "Admin,Doctor")]
             [HttpDelete("{appoScheId}")]
             public async Task<IActionResult> DeleteDocShedule(int? appoScheId)
             {

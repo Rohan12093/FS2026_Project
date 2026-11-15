@@ -17,7 +17,7 @@ namespace FSS_API.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = "Admin,Doctor")]
+
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -27,7 +27,6 @@ namespace FSS_API.Controllers
         }
 
         //--Kailash 9/11/2026--//
-        [Authorize(Roles = "Admin,Doctor")]
         [HttpGet("{doctorid}")]
         public async Task<ActionResult<TblDoctorDetail>> GetDoctor(int doctorid)
         {
@@ -72,7 +71,7 @@ namespace FSS_API.Controllers
         }
 
         //--POST--//
-        [Authorize(Roles = "Admin")]
+
         [HttpPost]
         public async Task<ActionResult<TblDoctorDetail>> PostDoctor(TblDoctorDetail doctor)
         {
@@ -83,7 +82,6 @@ namespace FSS_API.Controllers
         }
 
         //--DELETE--//
-        [Authorize(Roles = "Admin")]
         [HttpDelete("{doctorid}")]
         public async Task<IActionResult> DeleteDoctor(int? doctorid)
         {

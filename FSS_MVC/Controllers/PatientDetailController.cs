@@ -11,9 +11,9 @@ namespace FSS_MVC.Controllers
         private readonly HttpClient _httpClient;
         public PatientDetailController(IHttpClientFactory factory)
         {
-            _httpClient = factory.CreateClient();
+            _httpClient = factory.CreateClient("FSS_API");
         }
-        [Authorize(Roles = "Admin,Patient")]
+
         public async Task<IActionResult> Index()
         {
             var booking = await _httpClient.GetFromJsonAsync<List<PatientDetail>>(
@@ -21,7 +21,7 @@ namespace FSS_MVC.Controllers
 
             return View(booking);
         }
-        [Authorize(Roles = "Patient")]
+
         public async Task<IActionResult> Details(int id)
         {
             var response = await _httpClient.GetAsync($"api/PatientDetail/{id}");
@@ -33,21 +33,21 @@ namespace FSS_MVC.Controllers
             return View(await response.Content.ReadFromJsonAsync<PatientDetail>());
 
         }
-        [Authorize(Roles = "Patient")]
+
         public async Task<IActionResult> Create()
         {
             var appoSch = await _httpClient.GetFromJsonAsync<List<PatientDetail>>("api/PatientDetail/");
 
             ViewBag.appoSch = new SelectList(
                 appoSch,
-                "DocScheId",
-                "DocSchIsDate",
-                "DocSchStime"
+                "AppoScheId",
+                "AppoSchStime",
+                "AppoSchEtime"
                 );
 
             return View();
         }
-        [Authorize(Roles = "Patient")]
+
         [HttpPost]
         public async Task<IActionResult> Create(PatientDetail booking)
         {
@@ -59,7 +59,7 @@ namespace FSS_MVC.Controllers
             return View(booking);
 
         }
-        [Authorize(Roles = "Patient")]
+
         public async Task<IActionResult> Edit(int id)
         {
             var response = await _httpClient.GetAsync($"api/PatientDetail/{id}");
@@ -85,7 +85,7 @@ namespace FSS_MVC.Controllers
             return View(patient);
 
         }
-        [Authorize(Roles = "Patient")]
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, PatientDetail patientDetail)

@@ -21,9 +21,7 @@ namespace FSS_API.Controllers
             _httpClient = httpClientFactory.CreateClient("FeeCalcService");
         }
 
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Doctor")]
-        [Authorize(Roles = "Patient")]
+
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -58,7 +56,6 @@ namespace FSS_API.Controllers
 
 
         //--Kailash 9/11/2026--//
-        [Authorize(Roles = "Admin,Doctor,Patient")]
         [HttpGet("{bookingid}")]
         public async Task<ActionResult<TblBooking>> GetBooking(int bookingid)
         {
@@ -73,7 +70,6 @@ namespace FSS_API.Controllers
         }
 
         //---PUT---/
-        [Authorize(Roles = "Admin,Doctor")]
         [HttpPut("{bookingid}")]
         public async Task<IActionResult> PutBooking(int? bookingid, TblBooking appointment)
         {
@@ -103,7 +99,6 @@ namespace FSS_API.Controllers
         }
 
         //--POST--//
-        [Authorize(Roles = "Admin,Doctor,Patient")]
         [HttpPost]
         public async Task<ActionResult<TblBooking>> PostBooking(TblBooking appointment)
         {
@@ -114,7 +109,6 @@ namespace FSS_API.Controllers
         }
 
         //--DELETE--//
-        [Authorize(Roles = "Admin")]
         [HttpDelete("{bookingid}")]
         public async Task<IActionResult> DeleteBooking(int? bookingid)
         {
